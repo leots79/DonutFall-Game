@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4037888969722595337}
   m_Layer: 0
   m_Name: Octavio
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,8 +32,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4734613631168006432}
   - {fileID: 3604241441390704371}
   - {fileID: 3095864207496020614}
+  - {fileID: 5487311469797890817}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &6583187910575556339
@@ -76,11 +78,11 @@ MonoBehaviour:
   velocidadCarril: 10
   fuerzaSalto: 8
   gravedad: -9.81
-  puntoChequeo: {fileID: 0}
+  puntoChequeo: {fileID: 5487311469797890817}
   distanciaChequeo: 0.5
   capaSuelo:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   enSuelo: 0
 --- !u!114 &4037888969722595337
 MonoBehaviour:
@@ -89,12 +91,43 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2190604778831710184}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e98937c3435ec44a8ef975aee67dbaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vidasMaximas: 3
+--- !u!1 &4539331524637268548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5487311469797890817}
+  m_Layer: 0
+  m_Name: puntoChequeo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5487311469797890817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539331524637268548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4706116052455145021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8570564930037592027
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,14 +247,140 @@ PrefabInstance:
       propertyPath: m_Name
       value: OctavioModel
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8eab45564902d442827577037301c21, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5233112405309087440, guid: b8eab45564902d442827577037301c21, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b8eab45564902d442827577037301c21, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3397978726220821275}
   m_SourcePrefab: {fileID: 100100000, guid: b8eab45564902d442827577037301c21, type: 3}
 --- !u!4 &3604241441390704371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b8eab45564902d442827577037301c21, type: 3}
   m_PrefabInstance: {fileID: 3859143992875208984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4129526883214027849 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8eab45564902d442827577037301c21, type: 3}
+  m_PrefabInstance: {fileID: 3859143992875208984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3397978726220821275
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4129526883214027849}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 706d3561c8325a541bc1d036f1c950d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &5061486872199474891
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4706116052455145021}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      propertyPath: m_Name
+      value: OctavioModelCorriendo_v005
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8334523856213493999}
+  m_SourcePrefab: {fileID: 100100000, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+--- !u!4 &4734613631168006432 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+  m_PrefabInstance: {fileID: 5061486872199474891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5404155380551750554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8775cc1a1a2fb3941a01a9291046c97f, type: 3}
+  m_PrefabInstance: {fileID: 5061486872199474891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8334523856213493999
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404155380551750554}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 706d3561c8325a541bc1d036f1c950d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

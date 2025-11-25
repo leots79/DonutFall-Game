@@ -1,0 +1,91 @@
+!DOCTYPE html
+html lang=en-us
+  head
+    meta charset=utf-8
+    meta http-equiv=Content-Type content=texthtml; charset=utf-8
+    titleUnity Web Player  {{{ PRODUCT_NAME }}}title
+    style
+       ESTILOS Fondo oscuro, centrado perfecto y sin scroll 
+      html, body {
+        width 100%;
+        height 100%;
+        margin 0;
+        padding 0;
+        overflow hidden;
+        background #231F20; 
+        display flex;
+        align-items center;
+        justify-content center;
+      }
+
+      #unity-canvas {
+        background #231F20;
+        box-shadow 0 0 20px rgba(0,0,0,0.5);
+      }
+    style
+  head
+  body
+    canvas id=unity-canvas width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex=-1canvas
+    
+    script src=Build{{{ LOADER_FILENAME }}}script
+    
+    script
+      var canvas = document.querySelector(#unity-canvas);
+
+       Función matemática para mantener aspecto 169
+      function resizeCanvas() {
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var targetAspectRatio = 16  9;
+        
+        var newWidth, newHeight;
+
+        if (windowWidth  windowHeight  targetAspectRatio) {
+          newHeight = windowHeight;
+          newWidth = newHeight  targetAspectRatio;
+        } else {
+          newWidth = windowWidth;
+          newHeight = newWidth  targetAspectRatio;
+        }
+
+        canvas.style.width = newWidth + px;
+        canvas.style.height = newHeight + px;
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+
+      if (iPhoneiPadiPodAndroidi.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+
+        canvas.style.width = 100%;
+        canvas.style.height = 100%;
+        canvas.style.position = fixed;
+        document.body.style.textAlign = left;
+      } else {
+        resizeCanvas();
+      }
+
+      createUnityInstance(document.querySelector(#unity-canvas), {
+        arguments [],
+        dataUrl Build{{{ DATA_FILENAME }}},
+        frameworkUrl Build{{{ FRAMEWORK_FILENAME }}},
+        codeUrl Build{{{ CODE_FILENAME }}},
+        streamingAssetsUrl StreamingAssets,
+        companyName {{{ COMPANY_NAME }}},
+        productName {{{ PRODUCT_NAME }}},
+        productVersion {{{ PRODUCT_VERSION }}},
+         matchWebGLToCanvasSize false, 
+         devicePixelRatio 1, 
+      }).then((unityInstance) = {
+        if (!iPhoneiPadiPodAndroidi.test(navigator.userAgent)) {
+           resizeCanvas();
+        }
+      }).catch((message) = {
+        alert(message);
+      });
+    script
+  body
+html

@@ -11,7 +11,7 @@ public class GeneradorObstaculos : MonoBehaviour
     public GameObject[] prefabSafePaths;
 
     public float[] posicionesZ = { 5f, 0f, -5f };
-    float spawnX = 30f;
+    float spawnX = 75f;
     float spawnY = 0f;
     void Start()
     {
@@ -56,8 +56,6 @@ public class GeneradorObstaculos : MonoBehaviour
                     Instantiate(prefab, posicionSpawn, Quaternion.identity);
                 }
             }
-
-            
         }
     }
 
@@ -71,7 +69,6 @@ public class GeneradorObstaculos : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
-
     void Update()
     {
         

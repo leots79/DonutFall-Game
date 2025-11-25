@@ -1,15 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class Movimiento : MonoBehaviour
 {
     private CharacterController controller;
-    private Vector3 moveDirection; // movimiento total (x, y, z)
-    private Vector3 targetPosition; // posición objetivo para los carriles
-    Vector3 posicionX;
+    private Vector3 targetPosition; // posiciÃ³n objetivo para los carriles
 
-    [Header("Configuración de Movimiento")]
+    [Header("ConfiguraciÃ³n de Movimiento")]
     public float velocidadCarril = 10f; // velocidad de cambio de carril
     private int posicionLinea = 1; // 0 = Izquierda, 1 = Centro, 2 = Derecha
 
@@ -17,13 +15,13 @@ public class Movimiento : MonoBehaviour
     private float[] posicionesZ = { 5f, 0f, -5f }; // posiciones de los carriles
     // ------------------------
 
-    [Header("Configuración de Salto y Gravedad")]
+    [Header("ConfiguraciÃ³n de Salto y Gravedad")]
     public float fuerzaSalto = 0f;
     public float gravedad = 0f;
     private float velocidadVertical; // almacena la velocidad en Y
 
     // ------------------------
-    // Detección del suelo
+    // DetecciÃ³n del suelo
     public Transform puntoChequeo; // punto desde donde lanzar el rayo (por ejemplo, entre los pies)
     public float distanciaChequeo = 0.5f;
     public LayerMask capaSuelo;
@@ -31,6 +29,26 @@ public class Movimiento : MonoBehaviour
     // ------------------------
 
     private bool enRampa;
+
+    // ------------------------
+    // Animaciones
+    public GameObject objetoModelo;
+    Animator componenteAnimator;
+    // ------------------------
+
+    // ------------------------
+    // Audios
+    [SerializeField] private AudioClip saltoSonido;
+    [SerializeField] private AudioClip gameoverSonido;
+    public AudioSource audioSourceCorrer;
+    public AudioSource audioSourceMusica;
+    public AudioClip sonidoCorrer;
+    public AudioClip sonidoMuerte;
+    public AudioClip sonidoMusica;
+    public bool estaMuerto = false;
+    float enfriamientoSalto;
+
+
 
     private void Start()
     {
@@ -41,6 +59,22 @@ public class Movimiento : MonoBehaviour
         velocidadVertical = -1f;
 
         enRampa = false;
+
+        // ------------------------
+        // Animaciones
+        componenteAnimator = objetoModelo.GetComponentInChildren<Animator>();
+        componenteAnimator.SetInteger("Estado", 0);
+        // ------------------------
+
+        // ------------------------
+        // Audios
+        audioSourceCorrer.clip = sonidoCorrer;
+        audioSourceCorrer.loop = true; // Se repite constantemente
+        audioSourceMusica.clip = sonidoMusica;
+        audioSourceMusica.loop = true; // Se repite constantemente
+        audioSourceMusica.Play();
+        //audioSourceCorrer.Play();
+        enfriamientoSalto = 0;
 
     }
     void OnDrawGizmosSelected()
@@ -53,9 +87,10 @@ public class Movimiento : MonoBehaviour
     private void Update()
     {
         //velocidadVertical = -1f;
-   
-        
-        // Calcula la posición objetivo en el eje Z (para moverse entre carriles)
+        //componenteAnimator.SetInteger("Estado", 0);
+
+
+        // Calcula la posiciÃ³n objetivo en el eje Z (para moverse entre carriles)
         float targetZ = posicionesZ[posicionLinea];
         targetPosition = new Vector3(transform.position.x, transform.position.y, targetZ);
 
@@ -65,22 +100,31 @@ public class Movimiento : MonoBehaviour
 
         // --- SALTO Y GRAVEDAD ---
         // ------------------------
-        // Detección del suelo
+        // DetecciÃ³n del suelo
         enSuelo = Physics.Raycast(puntoChequeo.position, Vector3.down, distanciaChequeo, capaSuelo);
         // ------------------------
 
-
-        // Detección del suelo
-        enSuelo = Physics.Raycast(puntoChequeo.position, Vector3.down, distanciaChequeo, capaSuelo);
-
         if (enSuelo && velocidadVertical < 0)
         {
-            velocidadVertical = -2f; // valor pequeño para mantener al jugador en el suelo
+            velocidadVertical = -2f; // valor pequeÃ±o para mantener al jugador en el suelo
         }
 
         // Movimiento entre carriles
+        if (!enSuelo)
+        {
+            //Debug.Log("NOO Estoy en el suelo");
+            audioSourceCorrer.Stop();
+        }
         if (enSuelo)
         {
+            //Debug.Log("Estoy en el suelo");
+            if (!audioSourceCorrer.isPlaying)
+            {
+                enfriamientoSalto = 0;
+                audioSourceCorrer.Play();
+            }
+            componenteAnimator.SetInteger("Estado", 0);
+
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 posicionLinea = Mathf.Max(0, posicionLinea - 1);
@@ -93,12 +137,19 @@ public class Movimiento : MonoBehaviour
             // Salto
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                enfriamientoSalto = 0;
+                ControladorSonidos.Instance.EjecutarSonido(saltoSonido);
+                componenteAnimator.SetInteger("Estado", 1);
                 velocidadVertical = fuerzaSalto;
+
             }
+            enfriamientoSalto += Time.deltaTime;
+
         }
         else
         {
             // Aplicar gravedad
+  
             velocidadVertical -= gravedad * Time.deltaTime;
         }
 
@@ -107,7 +158,7 @@ public class Movimiento : MonoBehaviour
         Vector3 movimientoVertical = Vector3.up * velocidadVertical * Time.deltaTime;
         controller.Move(movimientoLateral + movimientoVertical);
 
-        // Mantener X = 0 si está en rampa
+        // Mantener X = 0 si estÃ¡ en rampa
         if (enRampa)
         {
             Vector3 pos = transform.position;
@@ -123,6 +174,14 @@ public class Movimiento : MonoBehaviour
         if (other.CompareTag("Rampa"))
         {
             enRampa = true;
+        }
+
+        if (other.CompareTag("Obstaculo"))
+        {
+            ControladorSonidos.Instance.EjecutarSonido(gameoverSonido);
+            audioSourceCorrer.Stop();
+            audioSourceMusica.Stop();
+            componenteAnimator.SetInteger("Estado", 1);
         }
     }
 

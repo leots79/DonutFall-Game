@@ -10,7 +10,6 @@ namespace Kart
         public float spawnZ = 0f;         // Posición fija en Z (opcional, puedes variar si quieres carriles)
         public float spawnY = 0f;         // Altura donde aparece el obstáculo
 
-        int indiceAleatorio = 0;
 
         private float[] posicionesZ = { 5f, 0f, -5f };
         void Start()
